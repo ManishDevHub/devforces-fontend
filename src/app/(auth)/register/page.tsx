@@ -10,7 +10,8 @@ const router = useRouter()
 const [ form , setForm ] = useState({
     name: "",
     email: "",
-    password: ""
+    password: "",
+    
 })
 
 const handleChange =(e: any) =>{
@@ -29,7 +30,8 @@ try{
         body:JSON.stringify({
             name: form.name,
             email: form.email,
-            password: form.password
+            password: form.password,
+            
         })
     })
 
@@ -73,6 +75,7 @@ try{
               onChange={handleChange}
              className='w-full border border-0.5px to-black px-4 py-3 outline-none rounded-lg text-gray-600 mb-4'
              />
+             
                 
                 <button type='submit' className='w-full py-3 bg-gray-700 text-white rounded-lg text-lg hover:bg-gray-900 transition'
                 > Register</button>
