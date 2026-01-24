@@ -39,6 +39,7 @@ export default function HomePage() {
             <span className="hover:text-white cursor-pointer">Discuss</span>
             <span className="hover:text-white cursor-pointer">Leaderboard</span>
           </nav>
+        
 
           <div className="flex items-center gap-4">
             
