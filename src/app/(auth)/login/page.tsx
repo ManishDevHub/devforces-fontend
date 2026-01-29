@@ -35,10 +35,12 @@ export default function Login() {
         toast.error(data.error || "Login Failed");
         return;
       }
+      console.log(data)
+      localStorage.setItem("token",data.token)
 
       toast.success("Login Successfully");
       setTimeout(() => {
-        router.push("/home");
+       router.push("/home");
       }, 1500);
     } catch (error) {
       toast.error("Server error");

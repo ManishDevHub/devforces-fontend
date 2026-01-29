@@ -3,6 +3,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const RATINGS = [
   { label: "Frontend", value: 4.8 },
@@ -33,11 +34,12 @@ export default function HomePage() {
           </div>
 
           <nav className="hidden md:flex items-center gap-8 text-sm text-slate-300">
-            <span className="hover:text-white cursor-pointer">Contests</span>
-            <span className="hover:text-white cursor-pointer">Practice</span>
-            <span className="hover:text-white cursor-pointer">Problems</span>
-            <span className="hover:text-white cursor-pointer">Discuss</span>
-            <span className="hover:text-white cursor-pointer">Leaderboard</span>
+            <Link  href="/contest">Contests</Link>
+            <Link  href="/practice">Practice</Link>
+            <Link  href="/problem">Problems</Link>
+            <Link  href="/discuss">Discuss</Link>
+            <Link  href="/leaderboard">Leaderboard</Link>
+         
           </nav>
         
 
