@@ -1,5 +1,5 @@
 import { ArrowRight, Badge, Clock, Eye, MessageSquare, Pin, ThumbsUp, TrendingUp } from 'lucide-react'
-import React from 'react'
+
 import { Button } from './ui/button'
 
 export default function DiscussSection() {
@@ -72,6 +72,8 @@ const trendingTags = [
   { name: "Microservices", count: 654 },
   { name: "Docker", count: 543 },
 ]
+
+ 
   return (
     <div>
          <section id="discuss" className="border-b border-border py-20 lg:py-28">

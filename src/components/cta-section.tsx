@@ -28,7 +28,7 @@ export default function CtaSection() {
 
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Button size="lg" className="gap-2 bg-primary px-8 text-primary-foreground hover:bg-primary/90">
-            Get Started for Free
+             Let Get Started 
             <ArrowRight className="h-4 w-4" />
           </Button>
           <Button size="lg" variant="outline" className="gap-2 border-border bg-transparent text-foreground hover:bg-secondary">

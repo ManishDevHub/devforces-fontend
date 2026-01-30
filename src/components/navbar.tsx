@@ -17,8 +17,10 @@ export default function Navbar() {
 
             </div>
             <div className="flex items-center gap-2">
-                <Button className="flex items-center gap-5" variant="default" > Get Started</Button>
-                  <Button className="flex items-center gap-2 "variant="sign"> SignUp</Button>
+                <Button className="flex items-center gap-5" variant="default" >
+                  <Link href="/register"> Get Started </Link> </Button>
+                  <Button className="flex items-center gap-2 "variant="sign">
+                    <Link href="/login"> Signin</Link> </Button>
             </div>
          
         </div>

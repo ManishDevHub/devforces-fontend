@@ -2,7 +2,7 @@ import ContestSection from '@/components/contests-section'
 import CtaSection from '@/components/cta-section'
 import DiscussSection from '@/components/discuss-section'
 import FeatureSection from '@/components/feature-section'
-import FooterSection, { Footer } from '@/components/footer-section'
+import  { Footer } from '@/components/footer-section'
 import LeaderboardSection from '@/components/leaderboard-section'
 import Navbar from '@/components/navbar'
 import PracticeSection from '@/components/practice-section'
@@ -10,6 +10,7 @@ import ProblemSection from '@/components/problem-section'
 import StatsSection from '@/components/StatsSection'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, Trophy, Users, Zap } from 'lucide-react'
+import Link from "next/link";
 import React from 'react'
 
 export default function page() {
@@ -49,7 +50,7 @@ export default function page() {
           {/* CTA Buttons */}
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button size="lg" className="gap-2 bg-primary px-8 text-primary-foreground hover:bg-primary/90">
-              Get Started
+              <Link href="/register"> Get Started </Link>
               <ArrowRight className="h-4 w-4" />
             </Button>
             <Button size="lg" variant="outline" className="gap-2 border-border bg-transparent text-foreground hover:bg-secondary">
