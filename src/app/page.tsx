@@ -1,5 +1,11 @@
 import ContestSection from '@/components/contests-section'
+import CtaSection from '@/components/cta-section'
+import DiscussSection from '@/components/discuss-section'
+import FeatureSection from '@/components/feature-section'
+import FooterSection, { Footer } from '@/components/footer-section'
+import LeaderboardSection from '@/components/leaderboard-section'
 import Navbar from '@/components/navbar'
+import PracticeSection from '@/components/practice-section'
 import ProblemSection from '@/components/problem-section'
 import StatsSection from '@/components/StatsSection'
 import { Button } from '@/components/ui/button'
@@ -81,6 +87,13 @@ export default function page() {
     <StatsSection></StatsSection>
     <ContestSection></ContestSection>
     <ProblemSection></ProblemSection>
+    <PracticeSection></PracticeSection>
+    <LeaderboardSection></LeaderboardSection>
+    <DiscussSection></DiscussSection>
+    <FeatureSection></FeatureSection>
+    <CtaSection></CtaSection>
+    <Footer></Footer>
+
      
     </div>
   )
