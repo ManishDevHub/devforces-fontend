@@ -38,7 +38,7 @@ export default function CtaSection() {
 
         {/* Trust Badges */}
         <div className="mt-16 flex flex-wrap items-center justify-center gap-8 opacity-60">
-          <p className="text-sm text-muted-foreground">Trusted by developers at</p>
+          <p className="text-sm text-muted-foreground">Trusted by developers at</p>E
           <div className="flex flex-wrap items-center justify-center gap-8">
             {["Google", "Meta", "Amazon", "Microsoft", "Stripe", "Vercel"].map((company) => (
               <span key={company} className="text-sm font-medium text-muted-foreground">
