@@ -6,6 +6,7 @@ import { ContestCard } from "@/components/contest-card";
 import { ContestFilters } from "@/components/contest-filters";
 import { contests, type ContestStatus, type ContestFrequency } from "@/lib/contests";
 import { Trophy, Flame, Calendar, History } from "lucide-react";
+import Navbar from "@/components/navbar";
 
 export default function ContestsPage() {
   const [statusFilter, setStatusFilter] = useState<ContestStatus | "all">("all");
@@ -37,7 +38,7 @@ export default function ContestsPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      
+      <Navbar></Navbar>
 
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Hero Section */}

@@ -10,7 +10,7 @@ export default function Navbar() {
             <Link className="text-xl font-bold" href="/">DevForce</Link>
             <div className=" hidden md:flex items-center gap-10">
                 <Link className="text-sm font-medium hover:text-primary " href="/contest"> Contest</Link>
-                <Link className="text-sm font-medium hover:text-primary " href="/problems"> Problems</Link>
+                <Link className="text-sm font-medium hover:text-primary " href="/problem"> Problems</Link>
                 <Link className="text-sm font-medium hover:text-primary " href="/practice"> Practice</Link>
                 <Link className="text-sm font-medium hover:text-primary " href="/leaderboard">LeaderBoard</Link>
                  <Link className="text-sm font-medium hover:text-primary " href="/discuss">Discuss</Link>
