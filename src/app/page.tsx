@@ -11,7 +11,7 @@ import StatsSection from '@/components/StatsSection'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, Trophy, Users, Zap } from 'lucide-react'
 import Link from "next/link";
-import React from 'react'
+
 
 export default function page() {
   return (
