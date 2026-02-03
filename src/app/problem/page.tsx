@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useEffect } from "react"
 
 import { useState, useMemo } from "react"
 import {
@@ -34,26 +34,7 @@ interface Problem {
   submissions: number
 }
 
-const problems: Problem[] = [
-  { id: "DF001", title: "JWT Token Refresh Flow", difficulty: "Easy", category: "Auth System", acceptance: 78.5, submissions: 12450 },
-  { id: "DF002", title: "OAuth2 Provider Integration", difficulty: "Medium", category: "Auth System", acceptance: 52.3, submissions: 8920 },
-  { id: "DF003", title: "Multi-Factor Authentication", difficulty: "Hard", category: "Auth System", acceptance: 31.2, submissions: 5670 },
-  { id: "DF004", title: "RESTful API Rate Limiter", difficulty: "Medium", category: "API Design", acceptance: 45.8, submissions: 15230 },
-  { id: "DF005", title: "GraphQL Schema Design", difficulty: "Medium", category: "API Design", acceptance: 48.1, submissions: 9870 },
-  { id: "DF006", title: "WebSocket Connection Manager", difficulty: "Hard", category: "Backend", acceptance: 28.9, submissions: 4560 },
-  { id: "DF007", title: "Discord Command Handler", difficulty: "Easy", category: "Bot Automation", acceptance: 82.1, submissions: 18930 },
-  { id: "DF008", title: "Database Connection Pooling", difficulty: "Medium", category: "Backend", acceptance: 55.4, submissions: 11200 },
-  { id: "DF009", title: "Slack Event Processor", difficulty: "Medium", category: "Bot Automation", acceptance: 49.7, submissions: 7650 },
-  { id: "DF010", title: "API Versioning Strategy", difficulty: "Easy", category: "API Design", acceptance: 71.3, submissions: 14780 },
-  { id: "DF011", title: "Session-Based Auth with Redis", difficulty: "Medium", category: "Auth System", acceptance: 58.2, submissions: 9340 },
-  { id: "DF012", title: "Microservices Message Queue", difficulty: "Hard", category: "Backend", acceptance: 25.6, submissions: 3890 },
-  { id: "DF013", title: "Telegram Bot State Machine", difficulty: "Hard", category: "Bot Automation", acceptance: 33.4, submissions: 5120 },
-  { id: "DF014", title: "OpenAPI Spec Generator", difficulty: "Medium", category: "API Design", acceptance: 44.9, submissions: 6780 },
-  { id: "DF015", title: "Role-Based Access Control", difficulty: "Medium", category: "Auth System", acceptance: 51.8, submissions: 10560 },
-  { id: "DF016", title: "Cron Job Scheduler", difficulty: "Easy", category: "Backend", acceptance: 75.2, submissions: 16890 },
-  { id: "DF017", title: "GitHub Actions Bot", difficulty: "Medium", category: "Bot Automation", acceptance: 46.3, submissions: 8210 },
-  { id: "DF018", title: "API Gateway Implementation", difficulty: "Hard", category: "API Design", acceptance: 29.7, submissions: 4230 },
-]
+
 
 const categories: { name: Category; icon: React.ReactNode; color: string }[] = [
   { name: "Auth System", icon: <Shield className="h-4 w-4" />, color: "text-primary" },
@@ -109,6 +90,9 @@ function StatCard({
 }
 
 export default function ProblemsPage() {
+
+  const [ problems , setProblems] = useState<Problem[]>([]);
+  const [loading , setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty | "All">("All")
   const [selectedCategory, setSelectedCategory] = useState<Category | "All">("All")
@@ -133,6 +117,10 @@ export default function ProblemsPage() {
       hard: problems.filter((p) => p.difficulty === "Hard").length,
     }
   }, [])
+
+  useEffect( () => {
+    
+  })
 
   return (
     <div className="min-h-screen bg-background">
