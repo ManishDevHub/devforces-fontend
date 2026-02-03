@@ -7,8 +7,11 @@ import { ContestFilters } from "@/components/contest-filters";
 import { contests, type ContestStatus, type ContestFrequency } from "@/lib/contests";
 import { Trophy, Flame, Calendar, History } from "lucide-react";
 import Navbar from "@/components/navbar";
+import { useAuthGuard } from "@/protectedRoute";
 
 export default function ContestsPage() {
+
+  useAuthGuard();
   const [statusFilter, setStatusFilter] = useState<ContestStatus | "all">("all");
   const [frequencyFilter, setFrequencyFilter] = useState<ContestFrequency | "all">("all");
   const [searchQuery, setSearchQuery] = useState("");
