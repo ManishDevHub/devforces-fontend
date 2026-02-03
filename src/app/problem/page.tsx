@@ -187,7 +187,7 @@ console.log("Full API Response:", data);
   title: p.title,
   difficulty:
     p.difficulty === "EASY" ? "Easy": p.difficulty === "MEDIUM" ? "Medium" : "Hard",
-  category: p.type as Category,
+  category: p.type,
   acceptance: 50 + (index % 30),
   submissions: 1000 + index * 200,
         }));
