@@ -128,7 +128,7 @@ export default function ProblemsPage() {
     
    
   
-    // const token = localStorage.getItem("token");
+    // 
    
 
     useAuthGuard();
@@ -167,6 +167,7 @@ export default function ProblemsPage() {
   useEffect(() => {
     const fetchProblems = async () => {
       try {
+        const token = localStorage.getItem("token");
         const res = await fetch(
           "http://localhost:4000/api/user/problem/problems",
           {
