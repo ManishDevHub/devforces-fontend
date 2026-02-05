@@ -1,9 +1,10 @@
 "use client";
 
+import { ContestFrequency, ContestStatus } from "@/app/contest/page";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import type { ContestStatus, ContestFrequency } from "@/lib/contests";
+
 
 interface ContestFiltersProps {
   statusFilter: ContestStatus | "all";
@@ -24,17 +25,17 @@ export function ContestFilters({
 }: ContestFiltersProps) {
   const statusOptions: { value: ContestStatus | "all"; label: string }[] = [
     { value: "all", label: "All Contests" },
-    { value: "live", label: "Live" },
-    { value: "upcoming", label: "Upcoming" },
-    { value: "past", label: "Past" },
+    { value: "LIVE", label: "Live" },
+    { value: "UPCOMING", label: "Upcoming" },
+    { value: "COMPLETED", label: "Completed" },
   ];
 
   const frequencyOptions: { value: ContestFrequency | "all"; label: string }[] = [
     { value: "all", label: "All Frequencies" },
-    { value: "weekly", label: "Weekly" },
-    { value: "bi-weekly", label: "Bi-Weekly" },
-    { value: "monthly", label: "Monthly" },
-    { value: "special", label: "Special" },
+    { value: "WEEKLY", label: "Weekly" },
+    { value: "BIWEEKLY", label: "Bi-Weekly" },
+    { value: "MONTHLY", label: "Monthly" },
+   
   ];
 
   return (
@@ -67,7 +68,7 @@ export function ContestFilters({
               }
             >
               {option.label}
-              {option.value === "live" && (
+              {option.value === "LIVE" && (
                 <span className="ml-1.5 flex h-2 w-2">
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-live" />
                 </span>
