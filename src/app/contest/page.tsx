@@ -1,17 +1,26 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 
 import { ContestCard } from "@/components/contest-card";
 import { ContestFilters } from "@/components/contest-filters";
-import { contests, type ContestStatus, type ContestFrequency } from "@/lib/contests";
+
 import { Trophy, Flame, Calendar, History } from "lucide-react";
 import Navbar from "@/components/navbar";
 import { useAuthGuard } from "@/protectedRoute";
+import { constants } from "buffer";
+
+
+export type ContestStatus = "LIVE" | "UPCOMING" | "COMPLETED";
+export type ContestFrequency = "WEEKLY" | "BIWEEKLY" | "MONTHLY";
+export type ContestCategory = "AUTH_SECURITY" | "API_BACKEND" | "BOT_AUTOMATION" | "APP_BACKEND" | "SYSTEM_DESIGN";
 
 export default function ContestsPage() {
 
   useAuthGuard();
+
+  const [ contests , setContests] = useState<any[]>([]);
+  const [ loading , setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState<ContestStatus | "all">("all");
   const [frequencyFilter, setFrequencyFilter] = useState<ContestFrequency | "all">("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -26,18 +35,66 @@ export default function ContestsPage() {
         contest.description.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesStatus && matchesFrequency && matchesSearch;
     });
-  }, [statusFilter, frequencyFilter, searchQuery]);
+  }, [statusFilter, frequencyFilter, searchQuery, contests]);
 
-  const liveContests = filteredContests.filter((c) => c.status === "live");
-  const upcomingContests = filteredContests.filter((c) => c.status === "upcoming");
-  const pastContests = filteredContests.filter((c) => c.status === "past");
+  const liveContests = filteredContests.filter((c) => c.status === "LIVE");
+  const upcomingContests = filteredContests.filter((c) => c.status === "UPCOMING");
+  const pastContests = filteredContests.filter((c) => c.status === "COMPLETED");
 
   const stats = {
-    live: contests.filter((c) => c.status === "live").length,
-    upcoming: contests.filter((c) => c.status === "upcoming").length,
-    past: contests.filter((c) => c.status === "past").length,
+    live: contests.filter((c) => c.status === "LIVE").length,
+    upcoming: contests.filter((c) => c.status === "UPCOMING").length,
+    past: contests.filter((c) => c.status === "COMPLETED").length,
     total: contests.length,
   };
+
+  useEffect( () =>{
+
+    const fetchContest = async () => {
+      try{
+         const token = localStorage.getItem("token");
+        const res = await fetch("http://localhost:4000/api/user/contest/allcontest", {
+          credentials: "include",
+             headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+          
+        })
+        const data = await res.json();
+
+        const maped = data.map((c:any) => {
+          const now = new Date();
+          const start = new Date(c.startTime);
+          const end = new Date(c.endTime);
+          let status = "UPCOMING"
+            if (now >= start && now <= end) {
+          status = "LIVE";
+        } else if (now > new Date(c.endTime)) {
+          status = "COMPLETED";
+        }
+        return {
+          id:c.id,
+          title:c.title,
+          discription:`${c.type} contest`,
+          frequency: c.type.toLowerCase(),
+          status,
+          startTime: start,
+          endTime: end
+        }
+        })
+        setContests(maped);
+
+      }catch(err){
+
+        console.error(err);
+        console.log(" failed to fetch contests")
+      } finally{
+        setLoading(false)
+      }
+    }
+    fetchContest();
+
+  }, [])
 
   return (
     <div className="min-h-screen bg-background">

@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react"
-
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import type { Contest } from "@/lib/contests";
+
 import { formatDuration, formatTimeRemaining } from "@/lib/contests";
 import {
   Calendar,
@@ -20,20 +20,35 @@ import {
   Shield,
 } from "lucide-react";
 
+type Contest = {
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  frequency: string;
+  difficultycon: "EASY" | "MEDIUM" | "HARD";
+  status: "LIVE" | "UPCOMING" | "COMPLETED";
+  startTime: Date;
+  endTime: Date;
+  participants: number;
+  problems: number;
+};
+
+
 const categoryIcons: Record<string, React.ReactNode> = {
-  auth: <Shield className="h-4 w-4" />,
-  backend: <Server className="h-4 w-4" />,
-  automation: <Bot className="h-4 w-4" />,
-  api: <Code className="h-4 w-4" />,
-  database: <Database className="h-4 w-4" />,
-  fullstack: <Layers className="h-4 w-4" />,
+  AUTH_SECURITY: <Shield className="h-4 w-4" />,
+  API_BACKEND: <Server className="h-4 w-4" />,
+  BOT_AUTOMATION: <Bot className="h-4 w-4" />,
+  APP_BACKEND: <Code className="h-4 w-4" />,
+  SYSTEM_DESIGN: <Database className="h-4 w-4" />,
+ 
 };
 
 const difficultyColors: Record<string, string> = {
-  Easy: "text-sky-400",
-  Medium: "text-blue-400",
-  Hard: "text-indigo-400",
-  Expert: "text-fuchsia-400",
+  EASY: "text-sky-400",
+  MEDIUM: "text-blue-400",
+  HARD: "text-indigo-400",
+  
 };
 
 interface ContestCardProps {
@@ -41,9 +56,9 @@ interface ContestCardProps {
 }
 
 export function ContestCard({ contest }: ContestCardProps) {
-  const isLive = contest.status === "live";
-  const isUpcoming = contest.status === "upcoming";
-  const isPast = contest.status === "past";
+  const isLive = contest.status === "LIVE";
+  const isUpcoming = contest.status === "UPCOMING";
+  const isPast = contest.status === "COMPLETED";
 
   return (
     <Card className="group relative overflow-hidden border-border bg-card transition-all hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5">
@@ -84,13 +99,14 @@ export function ContestCard({ contest }: ContestCardProps) {
                   : "border-border bg-secondary text-muted-foreground"
             }`}
           >
-            {isLive ? "Live" : isUpcoming ? "Upcoming" : "Completed"}
+            {isLive ? "LIVE" : isUpcoming ? "UPCOMING" : "COMPLETED"}
           </Badge>
           <Badge variant="outline" className="capitalize">
             {contest.frequency.replace("-", " ")}
           </Badge>
-          <Badge variant="outline" className={difficultyColors[contest.difficulty]}>
-            {contest.difficulty}
+          
+          <Badge variant="outline" className={difficultyColors[contest.difficultycon]}>
+            {contest.difficultycon}
           </Badge>
         </div>
 
@@ -152,7 +168,7 @@ export function ContestCard({ contest }: ContestCardProps) {
               })}
             </span>
             <Button size="sm" variant="ghost" className="text-muted-foreground hover:text-foreground">
-              View Results
+              <Link href="/leaderboard">View Results </Link>
             </Button>
           </div>
         )}
