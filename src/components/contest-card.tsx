@@ -1,10 +1,11 @@
 "use client";
-
-import React from "react"
+import axios from 'axios'
+import React, { useState } from "react"
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+
 
 import { formatDuration, formatTimeRemaining } from "@/lib/contests";
 import {
@@ -32,6 +33,7 @@ type Contest = {
   endTime: Date;
   participants: number;
   problems: number;
+  isRegistered?: boolean;
 };
 
 
@@ -59,6 +61,33 @@ export function ContestCard({ contest }: ContestCardProps) {
   const isLive = contest.status === "LIVE";
   const isUpcoming = contest.status === "UPCOMING";
   const isPast = contest.status === "COMPLETED";
+
+const [isRegistered, setIsRegistered] = useState<boolean>(!!contest.isRegistered);
+
+  const [loading, setLoading] = useState(false);
+
+  const handleRegister = async () => {
+    try {
+
+      const token = localStorage.getItem("token");
+      setLoading(true);
+    
+   await axios.post(
+  `http://localhost:4000/api/user/contest/${contest.id}/join`,
+  {},
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+);
+      setIsRegistered(true);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <Card className="group relative overflow-hidden border-border bg-card transition-all hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5">
@@ -107,6 +136,7 @@ export function ContestCard({ contest }: ContestCardProps) {
           
           <Badge variant="outline" className={difficultyColors[contest.difficultycon]}>
             {contest.difficultycon}
+          
           </Badge>
         </div>
 
@@ -154,9 +184,21 @@ export function ContestCard({ contest }: ContestCardProps) {
             <span className="text-sm text-upcoming font-medium">
               Starts in {formatTimeRemaining(contest.startTime)}
             </span>
-            <Button size="sm" variant="outline" className="border-upcoming/50 text-upcoming hover:bg-upcoming/10 bg-transparent">
-              Register
-            </Button>
+          {isRegistered ? (
+      <Button size="sm" disabled>
+        Registered
+      </Button>
+    ) : (
+     <Button
+  size="sm"
+  variant="outline"
+  disabled={isRegistered || loading}
+  onClick={handleRegister}
+  className="border-upcoming/50 text-upcoming hover:bg-upcoming/10 bg-transparent"
+>
+  {isRegistered ? "Registered" : loading ? "Registering..." : "Register"}
+</Button>
+    )}
           </div>
         ) : (
           <div className="flex w-full items-center justify-between">
@@ -176,3 +218,4 @@ export function ContestCard({ contest }: ContestCardProps) {
     </Card>
   );
 }
+

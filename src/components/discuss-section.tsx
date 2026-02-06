@@ -1,3 +1,6 @@
+"use client";
+
+
 import { ArrowRight, Badge, Clock, Eye, MessageSquare, Pin, ThumbsUp, TrendingUp } from 'lucide-react'
 
 import { Button } from './ui/button'
