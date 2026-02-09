@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
+import { useRouter as useNextRouter } from 'next/navigation';
 
 import { useState, useMemo } from "react";
 import {
@@ -22,6 +23,8 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/navbar";
 import { useAuthGuard } from "@/protectedRoute";
+
+
 
 type Difficulty = "Easy" | "Medium" | "Hard";
 type Category = "AUTH_SECURITY" | "BOT_AUTOMATION" | "API_BACKEND" | "APP_BACKEND"| "SYSTEM_DESIGN";
@@ -129,7 +132,7 @@ export default function ProblemsPage() {
    
   
     // 
-   
+   const router = useNextRouter();
 
     useAuthGuard();
   const [problems, setProblems] = useState<Problem[]>([]);
@@ -183,7 +186,7 @@ export default function ProblemsPage() {
 console.log("Full API Response:", data);
 
         const formatted = data.map((p: any, index: number) => ({
-         id: `DF${String(p.id).padStart(3, "0")}`,
+        id: p.id.toString(),
   title: p.title,
   difficulty:
     p.difficulty === "EASY" ? "Easy": p.difficulty === "MEDIUM" ? "Medium" : "Hard",
@@ -407,6 +410,7 @@ console.log("Full API Response:", data);
               filteredProblems.map((problem, index) => (
                 <div
                   key={problem.id}
+                  onClick={() => router.push(`/practice/${problem.id}`)}
                   className={cn(
                     "grid grid-cols-12 gap-4 px-6 py-5 items-center transition-all cursor-pointer group",
                     "hover:bg-primary/5 hover:border-l-2 hover:border-l-primary hover:pl-[22px]",
