@@ -134,7 +134,6 @@ export default function ProblemsPage() {
     // 
    const router = useNextRouter();
 
-    useAuthGuard();
   const [problems, setProblems] = useState<Problem[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -410,7 +409,7 @@ console.log("Full API Response:", data);
               filteredProblems.map((problem, index) => (
                 <div
                   key={problem.id}
-                  onClick={() => router.push(`/practice/${problem.id}`)}
+                  onClick={() => router.push(`/problem/${problem.id}`)}
                   className={cn(
                     "grid grid-cols-12 gap-4 px-6 py-5 items-center transition-all cursor-pointer group",
                     "hover:bg-primary/5 hover:border-l-2 hover:border-l-primary hover:pl-[22px]",

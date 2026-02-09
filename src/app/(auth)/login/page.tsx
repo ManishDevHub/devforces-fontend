@@ -36,7 +36,7 @@ export default function Login() {
         return;
       }
       console.log(data)
-      localStorage.setItem("token",data.token)
+      localStorage.setItem("token", data.token)
 
       toast.success("Login Successfully");
       setTimeout(() => {
