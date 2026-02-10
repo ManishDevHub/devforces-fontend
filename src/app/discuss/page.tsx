@@ -1,5 +1,9 @@
 "use client";
 
+import { jwtDecode } from "jwt-decode";
+
+
+
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -40,17 +44,6 @@ interface Message {
 }
 const WS_URL = "ws://localhost:8080";
 
-const generateUserId = () => {
-  if (typeof window === "undefined") return "User_GUEST";
-  let id = localStorage.getItem("devforces_user_id");
-  if (!id) {
-    id = `User_${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
-    localStorage.setItem("devforces_user_id", id);
-  }
-  return id;
-};
-
-
 
 
 export default function DiscussPage() {
@@ -66,62 +59,85 @@ export default function DiscussPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const socketRef = useRef<WebSocket | null>(null);
+useEffect(() => {
+  const token = localStorage.getItem("token");
 
-    useEffect(() => {
-    const userId = generateUserId();
-    setCurrentUserId(userId);
+  if (!token) {
+    console.error("❌ Token not found, user not logged in");
+    return;
+  }
 
-    const socket = new WebSocket(WS_URL);
-    socketRef.current = socket;
-    
+  let decoded: any;
+  try {
+    decoded = jwtDecode(token);
+  } catch (err) {
+    console.error("❌ Invalid token");
+    return;
+  }
 
-    socket.onmessage = (event) => {
-      
-      const payload = JSON.parse(event.data);
+  // 🔥 THIS IS THE FIX
+  const userId = decoded.id; // 👈 backend puts id here
 
+  if (!userId) {
+    console.error("❌ userId not found in token");
+    return;
+  }
 
-      
+  setCurrentUserId(userId);
 
-      if (payload.type === "history" || payload.type === "send") {
-        const msg = payload.data;
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: msg.id,
-            odisplayuserid: msg.userId,
-            username: msg.userId,
-            avatar: msg.userId.slice(5, 7).toUpperCase(),
-            content: msg.message,
-            timestamp: new Date(msg.createdAt).getTime(),
-            edited: false,
-          },
-        ]);
-      }
+  const socket = new WebSocket("ws://localhost:8080");
+  socketRef.current = socket;
 
-      if (payload.type === "edit") {
-        setMessages((prev) =>
-          prev.map((m) =>
-            m.id === payload.data.id
-              ? { ...m, content: payload.data.message, edited: true }
-              : m
-          )
-        );
-      }
+  socket.onopen = () => {
+    console.log("✅ WS connected as user:", userId);
+  };
 
-      if (payload.type === "delete") {
-        setMessages((prev) =>
-          prev.filter((m) => m.id !== payload.messageId)
-        );
-      }
-    };
+  socket.onmessage = (event) => {
+    const payload = JSON.parse(event.data);
 
-    socket.onopen = () => {
-  console.log("✅ WebSocket connected");
-};
+    if (payload.type === "history" || payload.type === "send") {
+      const msg = payload.data;
 
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: msg.id,
+          odisplayuserid: msg.userId,
+          username: msg.user?.name ?? "User",
+          avatar: msg.user?.name
+            ? msg.user.name.slice(0, 2).toUpperCase()
+            : "U",
+          content: msg.message,
+          timestamp: new Date(msg.createdAt).getTime(),
+          edited: false,
+        },
+      ]);
+    }
 
-    return () => socket.close();
-  }, []);
+    if (payload.type === "edit") {
+      setMessages((prev) =>
+        prev.map((m) =>
+          m.id === payload.data.id
+            ? { ...m, content: payload.data.message, edited: true }
+            : m
+        )
+      );
+    }
+
+    if (payload.type === "delete") {
+      setMessages((prev) =>
+        prev.filter((m) => m.id !== payload.messageId)
+      );
+    }
+  };
+
+  socket.onerror = (err) => {
+    console.error("❌ WS error", err);
+  };
+
+  return () => socket.close();
+}, []);
+
 
 
   const scrollToBottom = () => {
@@ -142,16 +158,14 @@ const handleSend = () => {
   socketRef.current.send(
     JSON.stringify({
       type: "send",
-      userId: currentUserId,
-      message: replyingTo
-        ? `@${replyingTo.username} ${newMessage.trim()}`
-        : newMessage.trim(),
+      userId: currentUserId, // ✅ REAL USER ID
+      message: newMessage.trim(),
     })
   );
 
   setNewMessage("");
-  setReplyingTo(null);
 };
+
 
  const handleSaveEdit = () => {
   if (!editContent.trim() || !editingId) return;
@@ -218,12 +232,13 @@ const handleEdit = (id: string) => {
   setEditContent(msg.content);
 };
 
-  const filteredMessages = messages.filter(
-    (m) =>
-      m.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      m.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      m.id.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+ const filteredMessages = messages.filter(
+  (m) =>
+    m.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    m.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    String(m.id).includes(searchQuery)
+);
+
 
   const onlineUsers = new Set(messages.map((m) => m.odisplayuserid)).size;
 
@@ -356,9 +371,9 @@ const handleEdit = (id: string) => {
                         >
                           {message.username}
                         </span>
-                        <span className="text-xs text-muted-foreground font-mono">
-                          #{message.id.split("_")[1]}
-                        </span>
+                       <span className="text-xs text-muted-foreground font-mono">
+  #{message.id}
+</span>
                         <span className="text-xs text-muted-foreground">
                           {formatTime(message.timestamp)}
                         </span>
