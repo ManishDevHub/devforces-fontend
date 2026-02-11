@@ -210,7 +210,7 @@ const [isRegistered, setIsRegistered] = useState<boolean>(!!contest.isRegistered
               })}
             </span>
             <Button size="sm" variant="ghost" className="text-muted-foreground hover:text-foreground">
-              <Link href="/leaderboard">View Results </Link>
+              <Link href={`/contest/${contest.id}`}> View Contest  </Link>
             </Button>
           </div>
         )}
