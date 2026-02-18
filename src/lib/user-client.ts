@@ -5,11 +5,13 @@ export interface UserProfile {
   id: string;
   name: string;
   email: string;
+  role: string;
   avatar: string | null;
   bio: string | null;
   createdAt: string;
   solvedProblems?: number;
   totalProblems?: number;
+  points?: number;
 }
 
 export interface UserActivity {

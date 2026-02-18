@@ -92,21 +92,21 @@ export default function LeaderboardPage() {
         const data = await res.json();
         
         // Transform backend data to Frontend User interface and add rank (Starts at 500,000)
-        const transformedUsers: User[] = data.map((u: any) => ({
+        const transformedUsers: User[] = data.map((u: any, index: number) => ({
             id: u.id,
-            rank: Math.max(1, 500000 - (u.points || 0)),
+            rank: index + 1,
             username: u.name || "Anonymous",
             rating: u.points,
-            maxRating: u.points, // Placeholder
-            problemsSolved: 0, // Placeholder
-            contestsParticipated: 0, // Placeholder
-            winRate: 0, // Placeholder
-            streak: 0, // Placeholder
+            maxRating: u.points, 
+            problemsSolved: 0, 
+            contestsParticipated: 0, 
+            winRate: 0, 
+            streak: 0, 
             trend: "same", 
             trendValue: 0,
-            country: "US", // Placeholder
+            country: "US", 
             tier: getTier(u.points),
-            isCurrentUser: false // Needs logic to check current user ID if available
+            isCurrentUser: false 
         }));
 
         setUsers(transformedUsers);

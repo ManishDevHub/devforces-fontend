@@ -94,6 +94,15 @@ export default function Navbar() {
               <span className="absolute -bottom-1 left-0 h-0.5 w-full origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
             </Link>
           ))}
+          {user?.role === "ADMIN" && (
+            <Link
+              href="/admin"
+              className="group relative text-sm font-medium text-primary transition-colors hover:text-primary/80"
+            >
+              Admin
+              <span className="absolute -bottom-1 left-0 h-0.5 w-full origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
+            </Link>
+          )}
         </nav>
 
         <div className="flex items-center gap-2">
