@@ -1,5 +1,6 @@
-import { ArrowRight, Badge, Bot, Check, Database, Globe, Lock, Server, Shield, Webhook } from 'lucide-react'
+import { ArrowRight, Bot, Check, Database, Globe, Lock, Server, Shield, Webhook } from 'lucide-react'
 import React from 'react'
+import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 
 export default function ProblemSection() {
@@ -132,7 +133,7 @@ const getDifficultyColor = (difficulty: string) => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center">
-          <Badge fontVariant="outline" className="mb-4 border-primary/30 text-primary">
+          <Badge variant="outline" className="mb-4 border-primary/30 text-primary">
             Problems
           </Badge>
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
@@ -223,7 +224,7 @@ const getDifficultyColor = (difficulty: string) => {
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <Badge fontVariant="outline" className={getDifficultyColor(problem.difficulty)}>
+                        <Badge variant="outline" className={getDifficultyColor(problem.difficulty)}>
                           {problem.difficulty}
                         </Badge>
                       </td>
@@ -233,7 +234,8 @@ const getDifficultyColor = (difficulty: string) => {
                       <td className="px-6 py-4">
                         <div className="flex flex-wrap gap-1">
                           {problem.tags.slice(0, 2).map((tag) => (
-                            <Badge key={tag} fontVariant="secondary" className="bg-secondary text-secondary-foreground text-xs">
+                            <Badge key={tag} variant="secondary"
+ className="bg-secondary text-secondary-foreground text-xs">
                               {tag}
                             </Badge>
                           ))}

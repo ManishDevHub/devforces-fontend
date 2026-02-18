@@ -13,15 +13,16 @@ export default function Register() {
     password: "",
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:4000/api/user/register", {
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+      const res = await fetch(`${API_BASE_URL}/api/user/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -38,11 +39,31 @@ export default function Register() {
         return;
       }
 
+      const loginRes = await fetch(`${API_BASE_URL}/api/user/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: form.email,
+          password: form.password,
+        }),
+      });
+
+      if (!loginRes.ok) {
+        toast.success("Register Successfully. Please login.");
+        setTimeout(() => {
+          router.push("/login");
+        }, 1200);
+        return;
+      }
+
+      const loginData = await loginRes.json();
+      localStorage.setItem("token", loginData.token);
+
       toast.success("Register Successfully");
       setTimeout(() => {
-        router.push("/login");
-      }, 1500);
-    } catch (error) {
+        router.push("/home");
+      }, 1000);
+    } catch {
       toast.error("Server error");
     }
   };

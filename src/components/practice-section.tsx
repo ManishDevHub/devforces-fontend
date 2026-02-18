@@ -1,6 +1,6 @@
-import { div } from 'framer-motion/client'
-import { ArrowRight, Badge, BarChart3, BookOpen, Clock, Layers, Target, Zap } from 'lucide-react'
+import { ArrowRight, BarChart3, BookOpen, Clock, Layers, Target, Zap } from 'lucide-react'
 import React from 'react'
+import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 
 export default function PracticeSection() {
@@ -82,7 +82,7 @@ const dailyChallenges = [
         {/* Section Header */}
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <Badge fontVariant="outline" className="mb-4 border-primary/30 text-primary">
+            <Badge variant="outline" className="mb-4 border-primary/30 text-primary">
               Practice
             </Badge>
             <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
@@ -114,7 +114,7 @@ const dailyChallenges = [
                     <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
                       {module.title}
                     </h3>
-                    <Badge fontVariant="outline" className={`mt-1 ${module.levelColor} border-0`}>
+                    <Badge variant="outline" className={`mt-1 ${module.levelColor} border-0`}>
                       {module.level}
                     </Badge>
                   </div>
@@ -154,7 +154,7 @@ const dailyChallenges = [
               {/* Topics */}
               <div className="mt-4 flex flex-wrap gap-2">
                 {module.topics.map((topic) => (
-                  <Badge key={topic} fontVariant="secondary" className="bg-secondary text-secondary-foreground">
+                  <Badge key={topic} variant="secondary" className="bg-secondary text-secondary-foreground">
                     {topic}
                   </Badge>
                 ))}
@@ -187,7 +187,7 @@ const dailyChallenges = [
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-muted-foreground">{challenge.day}</span>
                   <Badge 
-                    fontVariant="outline" 
+                    variant="outline" 
                     className={
                       challenge.difficulty === "Easy" 
                         ? "border-green-500/30 text-green-400" 

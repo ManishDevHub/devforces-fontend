@@ -42,7 +42,7 @@ interface Message {
   edited: boolean;
   replyTo?: string;
 }
-const WS_URL = "ws://localhost:8080";
+const WS_URL = process.env.NEXT_PUBLIC_WS_URL || "ws://127.0.0.1:8080";
 
 
 
@@ -85,7 +85,7 @@ useEffect(() => {
 
   setCurrentUserId(userId);
 
-  const socket = new WebSocket("ws://localhost:8080");
+  const socket = new WebSocket(WS_URL);
   socketRef.current = socket;
 
   socket.onopen = () => {
@@ -132,7 +132,7 @@ useEffect(() => {
   };
 
   socket.onerror = (err) => {
-    console.error("❌ WS error", err);
+    // Silently handle WS connection errors or implement retry logic here
   };
 
   return () => socket.close();

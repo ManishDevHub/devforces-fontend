@@ -8,7 +8,6 @@ import { ContestFilters } from "@/components/contest-filters";
 import { Trophy, Flame, Calendar, History } from "lucide-react";
 import Navbar from "@/components/navbar";
 import { useAuthGuard } from "@/protectedRoute";
-import { constants } from "buffer";
 
 
 export type ContestStatus = "LIVE" | "UPCOMING" | "COMPLETED";
@@ -52,8 +51,9 @@ export default function ContestsPage() {
 
     const fetchContest = async () => {
       try{
-         const token = localStorage.getItem("token");
-        const res = await fetch("http://localhost:4000/api/user/contest/allcontest", {
+        const token = localStorage.getItem("token");
+        const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+        const res = await fetch(`${API_BASE_URL}/api/user/contest/allcontest`, {
           credentials: "include",
              headers: {
         'Authorization': `Bearer ${token}` 
@@ -73,13 +73,18 @@ export default function ContestsPage() {
           status = "COMPLETED";
         }
         return {
-          id:c.id,
-          title:c.title,
-          discription:`${c.type} contest`,
-          frequency: c.type.toLowerCase(),
+          id: c.id,
+          title: c.title,
+          description: c.description || `${c.type} contest`,
+          frequency: c.type,
           status,
           startTime: start,
-          endTime: end
+          endTime: end,
+          isRegistered: c.isRegistered,
+          difficultycon: c.difficultycon,
+          category: c.category || "APP_BACKEND",
+          problems: c.problems || 0,
+          participants: c.participants || 0
         }
         })
         setContests(maped);

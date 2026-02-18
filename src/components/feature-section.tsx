@@ -1,5 +1,6 @@
-import { Badge, BarChart3, Code2, Globe, Shield, Timer, Trophy, Users, Zap } from 'lucide-react';
+import { BarChart3, Code2, Globe, Shield, Timer, Trophy, Users, Zap } from 'lucide-react';
 import React from 'react'
+import { Badge } from './ui/badge'
 
 export default function FeatureSection() {
     const features = [
@@ -59,7 +60,7 @@ export default function FeatureSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mx-auto max-w-3xl text-center">
-          <Badge fontVariant="outline" className="mb-4 border-primary/30 text-primary">
+          <Badge variant="outline" className="mb-4 border-primary/30 text-primary">
             Platform Features
           </Badge>
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">

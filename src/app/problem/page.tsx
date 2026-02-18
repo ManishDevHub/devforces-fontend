@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { useRouter as useNextRouter } from 'next/navigation';
-
-import { useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
+import React from "react";
+import { useRouter } from 'next/navigation';
 import {
   Search,
   Filter,
@@ -119,20 +118,11 @@ function StatCard({
   );
 }
 
-import { useRouter } from "next/navigation";
 
-
-  
-
- 
 
 export default function ProblemsPage() {
-    
-    
-   
-  
-    // 
-   const router = useNextRouter();
+   useAuthGuard();
+   const router = useRouter();
 
   const [problems, setProblems] = useState<Problem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -170,8 +160,9 @@ export default function ProblemsPage() {
     const fetchProblems = async () => {
       try {
         const token = localStorage.getItem("token");
+        const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
         const res = await fetch(
-          "http://localhost:4000/api/user/problem/problems",
+          `${API_BASE_URL}/api/user/problem/problems`,
           {
             credentials: "include",
            headers: {
@@ -181,8 +172,6 @@ export default function ProblemsPage() {
         );
 
         const data = await res.json();
-        
-console.log("Full API Response:", data);
 
         const formatted = data.map((p: any, index: number) => ({
         id: p.id.toString(),

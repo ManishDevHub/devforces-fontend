@@ -34,8 +34,9 @@ export default function ResetPasswordPage() {
     SetLoading(true);
 
     try {
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
       const res = await fetch(
-        `http://localhost:4000/api/user/reset-passwordPage/${token}`,
+        `${API_BASE_URL}/api/user/reset-passwordPage/${token}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

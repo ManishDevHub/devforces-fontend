@@ -117,11 +117,12 @@ export default function PracticePage() {
 
         const token = localStorage.getItem("token")
 
+        const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
         const [problemsRes, contestsRes] = await Promise.all([
-          fetch("http://localhost:4000/api/user/problem/problems", {
+          fetch(`${API_BASE_URL}/api/user/problem/problems`, {
             headers: token ? { Authorization: `Bearer ${token}` } : {},
           }),
-          fetch("http://localhost:4000/api/user/contest/allcontest", {
+          fetch(`${API_BASE_URL}/api/user/contest/allcontest`, {
             headers: token ? { Authorization: `Bearer ${token}` } : {},
           })
         ])

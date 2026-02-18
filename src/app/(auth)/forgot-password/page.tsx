@@ -20,8 +20,9 @@ export default function ForgotPassword() {
     SetLoading(true);
 
     try {
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
       const res = await fetch(
-        "http://localhost:4000/api/user/forgot-password",
+        `${API_BASE_URL}/api/user/forgot-password`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

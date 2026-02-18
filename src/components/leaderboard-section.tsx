@@ -1,5 +1,6 @@
-import { ArrowRight, Badge, Crown, Medal, Minus, TrendingDown, TrendingUp, Trophy } from 'lucide-react'
+import { ArrowRight, Crown, Medal, Minus, TrendingDown, TrendingUp, Trophy } from 'lucide-react'
 import React from 'react'
+import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 
 export default function LeaderboardSection() {
@@ -133,7 +134,7 @@ const getChangeIcon = (change: string) => {
         {/* Section Header */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <Badge fontVariant="outline" className="mb-4 border-primary/30 text-primary">
+            <Badge variant="outline" className="mb-4 border-primary/30 text-primary">
               Leaderboard
             </Badge>
             <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">

@@ -82,7 +82,10 @@ const [isRegistered, setIsRegistered] = useState<boolean>(!!contest.isRegistered
   }
 );
       setIsRegistered(true);
-    } catch (err) {
+    } catch (err: any) {
+      if (err.response?.status === 400) {
+         setIsRegistered(true);
+      }
       console.error(err);
     } finally {
       setLoading(false);

@@ -1,5 +1,6 @@
-import { ArrowRight, Badge, Calendar, Clock, Trophy, Users } from 'lucide-react'
+import { ArrowRight, Calendar, Clock, Trophy, Users } from 'lucide-react'
 import React from 'react'
+import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 
 export default function ContestSection() {
@@ -69,7 +70,7 @@ const recentContests = [
         {/* Section Header */}
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <div>
-            <Badge fontVariant="outline" className="mb-4 border-primary/30 text-primary">
+            <Badge variant="outline" className="mb-4 border-primary/30 text-primary">
               Contests
             </Badge>
             <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
@@ -98,7 +99,7 @@ const recentContests = [
                 
                 <div className="flex items-start justify-between">
                   <Badge 
-                    fontVariant="secondary" 
+                    variant="secondary"
                     className={`
                       ${contest.difficulty === "Intermediate" ? "bg-accent/20 text-accent" : ""}
                       ${contest.difficulty === "Advanced" ? "bg-primary/20 text-primary" : ""}
@@ -107,7 +108,7 @@ const recentContests = [
                   >
                     {contest.difficulty}
                   </Badge>
-                  <Badge fontVariant="outline" className="border-primary/30 text-primary">
+                  <Badge variant="outline" className="border-primary/30 text-primary">
                     {contest.type}
                   </Badge>
                 </div>

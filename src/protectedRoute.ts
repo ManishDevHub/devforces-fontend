@@ -10,5 +10,5 @@ export function useAuthGuard() {
     if (!token) {
       router.replace("/login");
     }
-  }, []);
+  }, [router]);
 }

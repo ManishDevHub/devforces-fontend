@@ -1,8 +1,8 @@
 "use client";
 
 
-import { ArrowRight, Badge, Clock, Eye, MessageSquare, Pin, ThumbsUp, TrendingUp } from 'lucide-react'
-
+import { ArrowRight, Clock, Eye, MessageSquare, Pin, ThumbsUp, TrendingUp } from 'lucide-react'
+import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 
 export default function DiscussSection() {
@@ -84,7 +84,7 @@ const trendingTags = [
         {/* Section Header */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <Badge fontVariant="outline" className="mb-4 border-primary/30 text-primary">
+            <Badge variant="outline" className="mb-4 border-primary/30 text-primary">
               Discuss
             </Badge>
             <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
@@ -116,7 +116,7 @@ const trendingTags = [
                       {topic.pinned && (
                         <Pin className="h-4 w-4 text-primary" />
                       )}
-                      <Badge fontVariant="outline" className={topic.categoryColor}>
+                      <Badge variant="outline" className={topic.categoryColor}>
                         {topic.category}
                       </Badge>
                     </div>
@@ -179,9 +179,7 @@ const trendingTags = [
               </h3>
               <div className="mt-4 flex flex-wrap gap-2">
                 {trendingTags.map((tag) => (
-                  <Badge
-                    key={tag.name}
-                    fontVariant="secondary"
+                    <Badge variant="secondary" key={tag.name}
                     className="cursor-pointer bg-secondary text-secondary-foreground hover:bg-primary/20 hover:text-primary transition-colors"
                   >
                     {tag.name}
