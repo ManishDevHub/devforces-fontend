@@ -8,6 +8,7 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 
 
 import { formatDuration, formatTimeRemaining } from "@/lib/contests";
+import { API_BASE_URL } from "@/lib/user-client";
 import {
   Calendar,
   Clock,
@@ -72,8 +73,8 @@ const [isRegistered, setIsRegistered] = useState<boolean>(!!contest.isRegistered
       const token = localStorage.getItem("token");
       setLoading(true);
     
-   await axios.post(
-  `http://localhost:4000/api/user/contest/${contest.id}/join`,
+    await axios.post(
+  `${API_BASE_URL}/api/user/contest/${contest.id}/join`,
   {},
   {
     headers: {

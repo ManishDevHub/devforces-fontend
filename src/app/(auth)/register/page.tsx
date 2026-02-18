@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { API_BASE_URL } from "@/lib/user-client";
 
 export default function Register() {
   const router = useRouter();
@@ -21,7 +22,6 @@ export default function Register() {
     e.preventDefault();
 
     try {
-      const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
       const res = await fetch(`${API_BASE_URL}/api/user/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
